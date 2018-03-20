@@ -1,0 +1,33 @@
+<% if(test){ %>
+	<%- include extend/header %>
+<% }else{ %>
+	<%- include extend/myHeader %>
+<% } %>
+<form method="post">
+
+  mac：  <input type="text" name="mac"/><br />
+           <input type="submit" value="查詢"/>
+</form>
+
+
+<% if (devices) { %>
+    <table width=“500" border="1">
+	<tr>
+		<td>mac位址</td>
+		<td>資料</td>
+		<td>接收時間</td>
+	</tr>
+	<% devices.forEach(function(device) { %>
+		<tr>
+		<td><%= device.macAddr %></td>
+		<td><%= device.data %></td>
+		<td><%= device.date %></td>
+		</tr>
+	<% }); %>
+	</table>
+<% } %>
+<% if(test){ %>
+	<%- include extend/footer %>
+<% }else{ %>
+	<%- include extend/myFooter %>
+<% } %>
