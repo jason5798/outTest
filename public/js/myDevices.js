@@ -21,15 +21,15 @@ var timeFormat = 'MM/DD/YYYY HH:mm';
       type: 'line',
       data: {
         labels: [
-          newDate(0),
+          /*newDate(0),
           newDate(1),
           newDate(2),
           newDate(3),
           newDate(4),
           newDate(5),
-          newDate(6)
+          newDate(6)*/
           ],
-        datasets: [{
+        datasets: [/* {
           label: "溫度1",
           backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
           borderColor: window.chartColors.red,
@@ -53,7 +53,7 @@ var timeFormat = 'MM/DD/YYYY HH:mm';
           borderColor: window.chartColors.purple,
           fill: false,
           data: [],
-        }]
+        } */]
       },
       options: {
                 title:{
@@ -279,6 +279,21 @@ function back(){
     location.href=document.referrer;
 }
 
+function newDataSet (fieldName, data) {
+  //alert('fieldName : ' + fieldName + '\ndata : ' +JSON.stringify(data));
+  var colorName = colorNames[ (config.data.datasets.length + 1) % colorNames.length];
+  var newColor = window.chartColors[colorName]
+  var newDataset = {
+    label: fieldName,
+    borderColor: newColor,
+    backgroundColor: color(newColor).alpha(0.5).rgbString(),
+    fill: false,
+    data: data,
+  };
+  //config.data.datasets.push(newDataset);
+  return newDataset;
+}
+
 function showChart(data){
     // alert('chart data : ' + JSON.stringify(data));
     if(data === null || data.length === 0) {
@@ -302,17 +317,22 @@ function showChart(data){
 
       mLables.push(newDate1(obj[1]));
     }
-    console.log(JSON.stringify(dataArr));
+    var fieldStr = document.getElementById('fields').value;
+    var fieldArr = fieldStr.split(',');
+    console.log('dataArr length : ' + dataArr.length + '\n' +JSON.stringify(dataArr));
     console.log(JSON.stringify(mLables));
+    console.log('fields' + JSON.stringify(fields));
     // alert('chart data : ' + JSON.stringify(mLables));
 
-    if (config.data.datasets.length > 0) {
+    if (dataArr.length > 0) {
         //config.data.labels.push(newDate(config.data.labels.length));
 
         config.data.labels= mLables;
 
-        for (var index = 0; index < config.data.datasets.length; ++index) {
-           config.data.datasets[index].data = dataArr[index];
+        for (var index = 0; index < dataArr.length; ++index) {
+           let newDataset = newDataSet(fieldArr[index], dataArr[index]);
+           //config.data.datasets[index].data = dataArr[index];
+           config.data.datasets.push(newDataset);
            console.log(JSON.stringify(config.data.datasets[index].data));
         }
 
