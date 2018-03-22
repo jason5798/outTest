@@ -16,6 +16,6 @@ module.exports = {
   isNeedGWMac: false,
   isNeedTypeSwitch: false,
   host: 'localhost',
-  hostPort: 8000,
+  hostPort: 8080,
   overtime: 4
 };
